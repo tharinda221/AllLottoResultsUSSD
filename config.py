@@ -1,5 +1,8 @@
 # configure the app
 import os
+
+from datetime import timedelta
+
 from app import *
 
 app.config.from_object(__name__)

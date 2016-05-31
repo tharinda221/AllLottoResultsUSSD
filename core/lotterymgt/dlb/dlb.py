@@ -10,9 +10,8 @@ def getDataFromDLB():
     return dlb_result_list
 
 
-def getDLBResult(dn, index):
+def getDLBResult(dn, index, DataList):
     wining_numbers_set = ""
-    DataList = getDataFromDLB()
     if index <= len(DataList):
         result = urllib2.Request(LotteryMgtDLB.dlb_data_result,
                                  urlencode({"db": DataList.values()[index], "dn": dn, "ename": ""}).encode())
@@ -26,4 +25,4 @@ def getDLBResult(dn, index):
         return "Wrong Index"
 
 
-print getDLBResult("1266", 0)
+#print getDLBResult("1266", 0)

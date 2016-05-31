@@ -21,3 +21,16 @@ class Ideamart:
     password = "password"
     SMSUrl = "http://localhost:7000/sms/send"
     USSDUrl = "http://localhost:7000/ussd/send"
+
+class Application:
+    def __init__(self):
+        pass
+
+    index = 0
+    messageFlow = 0
+    nlbListSize = 0
+    dlbListSize = 0
+    nlbList = {}
+    dlbList = {}
+    ErrorMessage = "Please Enter a number between given choices" + "\n" + "0. Back" + "\n" + "99. Exit"
+    getDrawNumber = "Please Enter draw number(Dinum wara ankaya)" + "\n" + "0. Back" + "\n" + "99. Exit"

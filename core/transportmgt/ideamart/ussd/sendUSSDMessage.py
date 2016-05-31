@@ -17,7 +17,6 @@ def sendUSSDMessage(messageBody):
 
     logging.info(res)
     form_data = json.dumps(res)
-    print form_data
     #logging.info(form_data)
     result = requests.post(url=messageBody.url, data=form_data)
 

@@ -12,9 +12,8 @@ def getDataFromNLB():
     return nlb_result_list
 
 
-def getNLBResult(dn, index):
+def getNLBResult(dn, index, dataList):
     lista = []
-    dataList = getDataFromNLB()
     if index <= len(dataList):
         lot = dataList.values()[index]
         data = requests.get(LotteryMgtNLB.nlb_data_result + LotteryMgtNLB.nlb_show_result + lot + "&dno=" + dn).content
@@ -35,4 +34,4 @@ def getNLBResult(dn, index):
 
 
 # print getDataFromNLB().values()
-print getNLBResult("4", 0)
+#print getNLBResult("4", 0)
