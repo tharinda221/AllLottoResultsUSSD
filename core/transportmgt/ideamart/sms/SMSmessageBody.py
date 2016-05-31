@@ -1,4 +1,4 @@
-class messageBody:
+class SMSmessageBody:
     def __init__(self, message="",
                  password="",
                  url="",
