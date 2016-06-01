@@ -25,4 +25,4 @@ def sendUSSDMessage(messageBody):
     if result.status_code == 200:
         logging.info('*** Message delivered Successfully! ****')
     else:
-        logging.info('*** Message was not delivered Successfully!! ERROR-CODE: ' + result.status_code + ' ****')
+        logging.info('*** Message was not delivered Successfully!! ERROR-CODE: ' + str(result.status_code) + ' ****')
