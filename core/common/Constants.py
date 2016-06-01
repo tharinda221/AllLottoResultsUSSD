@@ -20,8 +20,8 @@ class Ideamart:
         pass
 
     password = "0dcd163c817972cdf74a81446f8f8b3f"
-    SMSUrl = "http://api.dialog.lk/sms/send"
-    USSDUrl = "http://api.dialog.lk/ussd/send"
+    SMSUrl = "https://api.dialog.lk/sms/send"
+    USSDUrl = "https://api.dialog.lk/ussd/send"
 
 
 class Application:
