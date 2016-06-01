@@ -7,4 +7,4 @@ app = Flask(__name__)
 api = Api(app)
 sess = Session()
 
-api.add_resource(ReceiveMessage, '/smsReceiver')
+api.add_resource(ReceiveMessage, '/ussdReceiver')
