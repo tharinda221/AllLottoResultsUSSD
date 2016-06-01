@@ -7,4 +7,3 @@ from core.lotterymgt.dlb.dlb import *
 from core.common.Constants import *
 from flask import *
 from flask_restful import *
-

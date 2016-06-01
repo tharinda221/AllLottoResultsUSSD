@@ -14,6 +14,7 @@ class LotteryMgtNLB:
     nlb_data_result = "http://www.nlb.lk/"
     nlb_show_result = "show-results.php?lott="
 
+
 class Ideamart:
     def __init__(self):
         pass
@@ -21,6 +22,7 @@ class Ideamart:
     password = "password"
     SMSUrl = "http://localhost:7000/sms/send"
     USSDUrl = "http://localhost:7000/ussd/send"
+
 
 class Application:
     def __init__(self):

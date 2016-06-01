@@ -17,4 +17,3 @@ class USSDmessageBody:
         self.url = url
         self.password = password
         self.message = message
-

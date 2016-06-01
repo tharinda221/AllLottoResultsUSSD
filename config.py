@@ -3,7 +3,7 @@ import os
 
 from datetime import timedelta
 
-from app import *
+from run_config import *
 
 app.config.from_object(__name__)
 app.secret_key = os.urandom(24)

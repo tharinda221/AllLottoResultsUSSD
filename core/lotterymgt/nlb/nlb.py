@@ -32,6 +32,5 @@ def getNLBResult(dn, index, dataList):
     else:
         return "wrong index"
 
-
 # print getDataFromNLB().values()
-#print getNLBResult("4", 0)
+# print getNLBResult("4", 0)

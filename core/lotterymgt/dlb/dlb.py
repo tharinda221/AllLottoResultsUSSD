@@ -24,5 +24,4 @@ def getDLBResult(dn, index, DataList):
     else:
         return "Wrong Index"
 
-
-#print getDLBResult("1266", 0)
+# print getDLBResult("1266", 0)

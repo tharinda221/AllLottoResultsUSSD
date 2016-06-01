@@ -1,10 +1,6 @@
-from datetime import timedelta
-from flask import *
-from flask_restful import *
-from core.transportmgt.ideamart.receiveMessage import *
+import socket
 
-app = Flask(__name__)
-api = Api(app)
-sess = Session()
+from config import *
 
-api.add_resource(ReceiveMessage, '/smsReceiver')
+if __name__ == '__main__':
+    app.run()
