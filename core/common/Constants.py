@@ -19,9 +19,9 @@ class Ideamart:
     def __init__(self):
         pass
 
-    password = "password"
-    SMSUrl = "http://localhost:7000/sms/send"
-    USSDUrl = "http://localhost:7000/ussd/send"
+    password = "0dcd163c817972cdf74a81446f8f8b3f"
+    SMSUrl = "http://api.dialog.lk:8080/sms/send"
+    USSDUrl = "http://api.dialog.lk:8080/ussd/send"
 
 
 class Application:
