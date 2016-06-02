@@ -18,7 +18,7 @@ def sendUSSDMessage(messageBody):
            "version": messageBody.version
            }
     logging.error("Print payload")
-    logging.error("url: " + messageBody.url)
+    logging.error(json.dumps(res))
     req = urllib2.Request(messageBody.url, data=json.dumps(res), headers={"Content-Type": "application/json", "Accept": "application/json"})
     response = urllib2.urlopen(req)
     result = response.read()

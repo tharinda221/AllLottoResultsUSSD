@@ -43,7 +43,6 @@ class ReceiveMessage(Resource):
             Application.dlbList = getDataFromDLB()
             Application.dlbListSize = len(Application.dlbList)
             message = getMessage(Application.nlbList, Application.dlbList)
-            logging.error(message)
             USSDmessage = USSDmessageBody(message=message,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
                                           destAddress=decoded_json["sourceAddress"],
@@ -60,7 +59,7 @@ class ReceiveMessage(Resource):
             logging.error("mo-cont Request Came")
             try:
                 requestNumber = int(decoded_json["message"])
-                logging.error(requestNumber)
+                logging.error(Application.messageFlow)
                 if requestNumber == 0:
                     Application.messageFlow -= 2
                 if Application.messageFlow == 0:
