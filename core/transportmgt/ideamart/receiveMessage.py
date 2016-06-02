@@ -1,4 +1,6 @@
 from __init__ import *
+from core.usermgt.User import User
+from core.usermgt.UserDAO import UserDAO
 
 
 def getMessage(nlbList, dlbList):
@@ -37,32 +39,46 @@ class ReceiveMessage(Resource):
         logging.error("\n\n**** HTTP Request:\n" + request.data + "****\n\n")
         received_content = request.data
         decoded_json = json.loads(received_content)
+        # user DAO initiated
+        dao = UserDAO()
+        # identifying initial request came from user
         if decoded_json["ussdOperation"] == "mo-init":
+            # fetch data from lottery database
             Application.nlbList = getDataFromNLB()
             Application.nlbListSize = len(Application.nlbList)
             Application.dlbList = getDataFromDLB()
             Application.dlbListSize = len(Application.dlbList)
             message = getMessage(Application.nlbList, Application.dlbList)
+            # initiate the user object
+            user = User(address=decoded_json["sourceAddress"], index=0, messageFlow=1, lotteryList=[],
+                        count=1)
+            dao.createUser(user)
             USSDmessage = USSDmessageBody(message=message,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
                                           destAddress=decoded_json["sourceAddress"],
                                           applicationID=decoded_json["applicationId"]
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
-            # SMSmessage = SMSmessageBody(message="hello world!", password=Ideamart.password, url=Ideamart.SMSUrl,
-            #                             destAddress=decoded_json["sourceAddress"],
-            #                             applicationID=decoded_json["applicationId"])
             sendUSSDMessage(USSDmessage)
-            #sendSMSMessage(SMSmessage)
-            Application.messageFlow = 1
+            dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
+        #
         else:
             logging.error("mo-cont Request Came")
+            user = dao.getUser(decoded_json["sourceAddress"])
+            Application.messageFlow = user.messageFlow
             try:
                 requestNumber = int(decoded_json["message"])
                 logging.error("messageFlow")
                 logging.error(Application.messageFlow)
                 if Application.messageFlow == 0:
-                    USSDmessage = USSDmessageBody(message=getMessage(Application.nlbList, Application.dlbList),
+                    # fetch data from lottery database
+                    Application.nlbList = getDataFromNLB()
+                    Application.nlbListSize = len(Application.nlbList)
+                    Application.dlbList = getDataFromDLB()
+                    Application.dlbListSize = len(Application.dlbList)
+                    message = getMessage(Application.nlbList, Application.dlbList)
+
+                    USSDmessage = USSDmessageBody(message=message,
                                                   password=Ideamart.password, url=Ideamart.USSDUrl,
                                                   destAddress=decoded_json["sourceAddress"],
                                                   applicationID=decoded_json["applicationId"]
@@ -70,10 +86,11 @@ class ReceiveMessage(Resource):
                                                   sessionId=decoded_json["sessionId"],
                                                   ussdOperation="mt-cont", version=decoded_json["version"])
                     sendUSSDMessage(USSDmessage)
-                    Application.messageFlow = 1
+                    dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
+                # request draw number
                 elif Application.messageFlow == 1:
                     if (1 <= requestNumber <= (Application.dlbListSize + Application.nlbListSize)):
-                        Application.index = requestNumber
+                        dao.updateUserIndex(decoded_json["sourceAddress"], requestNumber)
                         USSDmessage = USSDmessageBody(message=Application.getDrawNumber,
                                                       password=Ideamart.password, url=Ideamart.USSDUrl,
                                                       destAddress=decoded_json["sourceAddress"],
@@ -82,7 +99,8 @@ class ReceiveMessage(Resource):
                                                       sessionId=decoded_json["sessionId"],
                                                       ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
-                        Application.messageFlow = 2
+                        dao.updateUserMessageFlow(decoded_json["sourceAddress"], 2)
+                    # user request fail scenario
                     else:
                         USSDmessage = USSDmessageBody(message=Application.ErrorMessage,
                                                       password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -92,9 +110,10 @@ class ReceiveMessage(Resource):
                                                       sessionId=decoded_json["sessionId"],
                                                       ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
-                        Application.messageFlow = 0
+                        dao.updateUserMessageFlow(decoded_json["sourceAddress"], 0)
+                # send result message
                 elif Application.messageFlow == 2:
-                    USSDmessage = USSDmessageBody(message=LotteryResult(Application.index, str(
+                    USSDmessage = USSDmessageBody(message=LotteryResult(user.index, str(
                         requestNumber)) + "\n" + "0. Thava balanna" + "\n" + "99. Exit",
                                                   password=Ideamart.password, url=Ideamart.USSDUrl,
                                                   destAddress=decoded_json["sourceAddress"],
@@ -103,8 +122,8 @@ class ReceiveMessage(Resource):
                                                   sessionId=decoded_json["sessionId"],
                                                   ussdOperation="mt-cont", version=decoded_json["version"])
                     sendUSSDMessage(USSDmessage)
-                    Application.messageFlow = 0
-
+                    dao.updateUserMessageFlow(decoded_json["sourceAddress"], 0)
+            # This exceptional is to handle bad request came by the user such as strings.
             except:
                 USSDmessage = USSDmessageBody(message=Application.ErrorMessage,
                                               password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -113,4 +132,4 @@ class ReceiveMessage(Resource):
                                               , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                               ussdOperation="mt-cont", version=decoded_json["version"])
                 sendUSSDMessage(USSDmessage)
-                Application.messageFlow = 0
+                dao.updateUserMessageFlow(decoded_json["sourceAddress"], 0)

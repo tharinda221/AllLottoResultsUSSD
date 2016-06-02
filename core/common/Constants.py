@@ -1,3 +1,5 @@
+from core.dbmgt.getConnection import *
+
 class LotteryMgtDLB:
     def __init__(self):
         pass
@@ -39,3 +41,10 @@ class Application:
     dlbList = {}
     ErrorMessage = "Please Enter a number between given choices" + "\n" + "0. Back" + "\n" + "99. Exit"
     getDrawNumber = "Please Enter draw number(Dinum wara ankaya)" + "\n" + "0. Back" + "\n" + "99. Exit"
+
+
+class DatabaseCollections:
+    def __init__(self):
+        pass
+
+    userCollection = getDatabase().userCollection
