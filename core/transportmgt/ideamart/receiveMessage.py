@@ -117,6 +117,11 @@ class ReceiveMessage(Resource):
                         dao.updateUserMessageFlow(decoded_json["sourceAddress"], 0)
                 # send result message
                 elif Application.messageFlow == 2:
+                    # fetch data from lottery database
+                    Application.nlbList = getDataFromNLB()
+                    Application.nlbListSize = len(Application.nlbList)
+                    Application.dlbList = getDataFromDLB()
+                    Application.dlbListSize = len(Application.dlbList)
                     USSDmessage = USSDmessageBody(message=LotteryResult(user.index, str(
                         requestNumber)) + "\n" + "0. Thava balanna" + "\n" + "99. Exit",
                                                   password=Ideamart.password, url=Ideamart.USSDUrl,
