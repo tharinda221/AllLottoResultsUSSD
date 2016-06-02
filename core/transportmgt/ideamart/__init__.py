@@ -1,5 +1,5 @@
-from core.transportmgt.ideamart.sms.SMSmessageBody import *
-from core.transportmgt.ideamart.sms.sendSMSMessage import *
+# from core.transportmgt.ideamart.sms.SMSmessageBody import *
+# from core.transportmgt.ideamart.sms.sendSMSMessage import *
 from core.transportmgt.ideamart.ussd.sendUSSDMessage import *
 from core.transportmgt.ideamart.ussd.USSDmessageBody import *
 from core.lotterymgt.nlb.nlb import *
