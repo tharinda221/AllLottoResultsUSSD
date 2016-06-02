@@ -59,9 +59,8 @@ class ReceiveMessage(Resource):
             logging.error("mo-cont Request Came")
             try:
                 requestNumber = int(decoded_json["message"])
+                logging.error("messageFlow")
                 logging.error(Application.messageFlow)
-                if requestNumber == 0:
-                    Application.messageFlow -= 2
                 if Application.messageFlow == 0:
                     USSDmessage = USSDmessageBody(message=getMessage(Application.nlbList, Application.dlbList),
                                                   password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -83,7 +82,7 @@ class ReceiveMessage(Resource):
                                                       sessionId=decoded_json["sessionId"],
                                                       ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
-                        Application.messageFlow += 1
+                        Application.messageFlow = 2
                     else:
                         USSDmessage = USSDmessageBody(message=Application.ErrorMessage,
                                                       password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -93,7 +92,7 @@ class ReceiveMessage(Resource):
                                                       sessionId=decoded_json["sessionId"],
                                                       ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
-                        Application.messageFlow -= 1
+                        Application.messageFlow = 0
                 elif Application.messageFlow == 2:
                     USSDmessage = USSDmessageBody(message=LotteryResult(Application.index, str(
                         requestNumber)) + "\n" + "0. Thava balanna" + "\n" + "99. Exit",
@@ -104,6 +103,7 @@ class ReceiveMessage(Resource):
                                                   sessionId=decoded_json["sessionId"],
                                                   ussdOperation="mt-cont", version=decoded_json["version"])
                     sendUSSDMessage(USSDmessage)
+                    Application.messageFlow = 0
 
             except:
                 USSDmessage = USSDmessageBody(message=Application.ErrorMessage,
@@ -113,4 +113,4 @@ class ReceiveMessage(Resource):
                                               , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                               ussdOperation="mt-cont", version=decoded_json["version"])
                 sendUSSDMessage(USSDmessage)
-                Application.messageFlow -= 1
+                Application.messageFlow = 0
