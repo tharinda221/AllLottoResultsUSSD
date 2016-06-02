@@ -54,7 +54,7 @@ class ReceiveMessage(Resource):
                                         destAddress=decoded_json["sourceAddress"],
                                         applicationID=decoded_json["applicationId"])
             sendUSSDMessage(USSDmessage)
-            sendSMSMessage(SMSmessage)
+            #sendSMSMessage(SMSmessage)
             Application.messageFlow = 1
         else:
             logging.error("mo-cont Request Came")
@@ -69,7 +69,7 @@ class ReceiveMessage(Resource):
                                                   applicationID=decoded_json["applicationId"]
                                                   , encording=decoded_json["encoding"],
                                                   sessionId=decoded_json["sessionId"],
-                                                  ussdOperation="mo-cont", version=decoded_json["version"])
+                                                  ussdOperation="mt-cont", version=decoded_json["version"])
                     sendUSSDMessage(USSDmessage)
                     Application.messageFlow = 1
                 elif Application.messageFlow == 1:
@@ -81,7 +81,7 @@ class ReceiveMessage(Resource):
                                                       applicationID=decoded_json["applicationId"]
                                                       , encording=decoded_json["encoding"],
                                                       sessionId=decoded_json["sessionId"],
-                                                      ussdOperation="mo-cont", version=decoded_json["version"])
+                                                      ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
                         Application.messageFlow += 1
                     else:
@@ -91,7 +91,7 @@ class ReceiveMessage(Resource):
                                                       applicationID=decoded_json["applicationId"]
                                                       , encording=decoded_json["encoding"],
                                                       sessionId=decoded_json["sessionId"],
-                                                      ussdOperation="mo-cont", version=decoded_json["version"])
+                                                      ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
                         Application.messageFlow -= 1
                 elif Application.messageFlow == 2:
@@ -102,7 +102,7 @@ class ReceiveMessage(Resource):
                                                   applicationID=decoded_json["applicationId"]
                                                   , encording=decoded_json["encoding"],
                                                   sessionId=decoded_json["sessionId"],
-                                                  ussdOperation="mt-fin", version=decoded_json["version"])
+                                                  ussdOperation="mt-cont", version=decoded_json["version"])
                     sendUSSDMessage(USSDmessage)
 
             except:
@@ -111,6 +111,6 @@ class ReceiveMessage(Resource):
                                               destAddress=decoded_json["sourceAddress"],
                                               applicationID=decoded_json["applicationId"]
                                               , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
-                                              ussdOperation="mo-cont", version=decoded_json["version"])
+                                              ussdOperation="mt-cont", version=decoded_json["version"])
                 sendUSSDMessage(USSDmessage)
                 Application.messageFlow -= 1
