@@ -23,4 +23,4 @@ def sendSMSMessage(messageBody):
     if result.status_code == 200:
         logging.error('*** Message delivered Successfully! ****')
     else:
-        logging.error('*** Message was not delivered Successfully!! ERROR-CODE: ' + result.status_code + ' ****')
+        logging.error('*** Message was not delivered Successfully!! ERROR-CODE: ' + str(result.status_code) +  ' ****')
