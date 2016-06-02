@@ -12,7 +12,8 @@ def sendUSSDMessage(messageBody):
            "ussdOperation": messageBody.ussdOperation,
            "sessionId": messageBody.sessionId,
            "encoding": messageBody.encording,
-           "version": messageBody.version
+           "version": messageBody.version,
+           "requestId": messageBody.requestId
            }
     form_data = json.dumps(res)
     logging.error("Print payload")
@@ -20,7 +21,7 @@ def sendUSSDMessage(messageBody):
     logging.error("url: " + messageBody.url)
     result = requests.post(url=messageBody.url, data=form_data)
     logging.error("Result content")
-    logging.error(result.content)
+    logging.error(result)
 
     if result.status_code == 200:
         logging.error('*** Message delivered Successfully! ****')
