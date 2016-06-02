@@ -12,5 +12,5 @@ api.add_resource(ReceiveMessage, '/ussdReceiver')
 
 @app.route('/')
 def error():
-    app.logger.info("Download Log File")
-    return send_from_directory("","error.log")
+    logging.error("Download Log File")
+    return send_from_directory("/var/log/apache2/","error.log")

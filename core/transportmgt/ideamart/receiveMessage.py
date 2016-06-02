@@ -25,14 +25,14 @@ def LotteryResult(number, dn):
 
 class ReceiveMessage(Resource):
     def get(self):
-        run_config.app.logger.info(request.data)
+        logging.error(request.data)
         response = make_response("Hello, Telco App is running")
         response.headers['Content-Type'] = 'application/json'
         response.headers['Accept'] = 'application/json'
         return response
 
     def post(self):
-        run_config.app.logger.info("\n\n**** HTTP Request:\n" + request.data + "****\n\n")
+        logging.error("\n\n**** HTTP Request:\n" + request.data + "****\n\n")
         received_content = request.data
         decoded_json = json.loads(received_content)
         if decoded_json["ussdOperation"] == "mo-init":

@@ -13,14 +13,14 @@ def sendSMSMessage(messageBody):
            "applicationId": messageBody.applicationID
            }
 
-    run_config.app.logger.info(res)
+    logging.error(res)
     form_data = json.dumps(res)
     # logging.info(form_data)
     result = requests.post(url=messageBody.url, data=form_data)
 
-    run_config.app.logger.info(result.content)
+    logging.error(result.content)
 
     if result.status_code == 200:
-        run_config.app.logger.info('*** Message delivered Successfully! ****')
+        logging.error('*** Message delivered Successfully! ****')
     else:
-        run_config.app.logger.info('*** Message was not delivered Successfully!! ERROR-CODE: ' + result.status_code + ' ****')
+        logging.error('*** Message was not delivered Successfully!! ERROR-CODE: ' + result.status_code + ' ****')

@@ -11,3 +11,4 @@
 {'destinationAddresses': u'tel:94771122336', 'message': 'hello world!', 'password': 'password', 'applicationId': u'APP_000001'}
 {"destinationResponses":[{"timeStamp":"20160602074405","address":"tel:94771122336","requestId":"1464833645317","statusDetail":"Success","statusCode":"S1000"}],"requestId":"1464833645317","statusDetail":"Success","version":"1.0","statusCode":"S1000"}
 *** Message delivered Successfully! ****
+
