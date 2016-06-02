@@ -91,7 +91,9 @@ class ReceiveMessage(Resource):
                     dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
                 # request draw number
                 elif Application.messageFlow == 1:
-                    if (1 <= requestNumber <= (Application.dlbListSize + Application.nlbListSize)):
+                    logging.error("requestNumber")
+                    logging.error(requestNumber)
+                    if (0 < requestNumber <= (Application.dlbListSize + Application.nlbListSize)):
                         dao.updateUserIndex(decoded_json["sourceAddress"], requestNumber)
                         USSDmessage = USSDmessageBody(message=Application.getDrawNumber,
                                                       password=Ideamart.password, url=Ideamart.USSDUrl,
