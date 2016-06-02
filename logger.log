@@ -1,0 +1,13 @@
+
+
+
+**** HTTP Request:
+{"ussdOperation":"mo-init","sourceAddress":"tel:94771122336","requestId":1464833639507,"vlrAddress":"some vlr address","sessionId":"123","applicationId":"APP_000001","message":"#678*","encoding":"440","version":"1.0"}****
+
+
+{'sessionId': u'123', 'destinationAddress': u'tel:94771122336', 'version': u'1.0', 'encoding': u'440', 'message': u'1.Double Bonus\n2.Neeroga\n3.Supiri Wasana\n4.Supiri Delakshapathi\n5.Govi Setha\n6.Airport Super Draw\n7.Sampath Rekha\n8.Jathika Sampatha\n9.Power Lotto\n10.Mega Power\n11.Mahajana Sampatha\n12.Vasana Sampatha\n13.Jayoda\n14.Saturday Fortune\n15.Galaxy Star\n16.Sanwardana Lakshapathi\n17.Niyatha Jaya\n18.Kotipathi Shanida\n19.Super Ball\n20.Lagna Wasana\n', 'password': 'password', 'applicationId': u'APP_000001', 'ussdOperation': 'mo-cont'}
+{"timeStamp":"1606020744","requestId":"1464833645304","statusDetail":"Success","version":"0.1","statusCode":"S1000"}
+*** Message delivered Successfully! ****
+{'destinationAddresses': u'tel:94771122336', 'message': 'hello world!', 'password': 'password', 'applicationId': u'APP_000001'}
+{"destinationResponses":[{"timeStamp":"20160602074405","address":"tel:94771122336","requestId":"1464833645317","statusDetail":"Success","statusCode":"S1000"}],"requestId":"1464833645317","statusDetail":"Success","version":"1.0","statusCode":"S1000"}
+*** Message delivered Successfully! ****

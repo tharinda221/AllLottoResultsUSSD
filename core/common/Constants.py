@@ -22,6 +22,9 @@ class Ideamart:
     password = "0dcd163c817972cdf74a81446f8f8b3f"
     SMSUrl = "https://api.dialog.lk/sms/send"
     USSDUrl = "https://api.dialog.lk/ussd/send"
+    # password = "password"
+    # SMSUrl = "http://localhost:7000/sms/send"
+    # USSDUrl = "http://localhost:7000/ussd/send"
 
 
 class Application:
