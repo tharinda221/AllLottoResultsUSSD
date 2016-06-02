@@ -115,8 +115,7 @@ class UserDAO:
         :param address: App used Count of the user
         :return: List
         """
-        data = DatabaseCollections.userCollection.find({"address": address})
-
+        data = DatabaseCollections.userCollection.find_one({"address": address})
         if data is None:
             return None
         else:
