@@ -17,8 +17,9 @@ def sendUSSDMessage(messageBody):
     form_data = json.dumps(res)
     logging.error("Print payload")
     logging.error(form_data)
+    logging.error("url: " + messageBody.url)
     result = requests.post(url=messageBody.url, data=form_data)
-
+    logging.error("Result content")
     logging.error(result.content)
 
     if result.status_code == 200:
