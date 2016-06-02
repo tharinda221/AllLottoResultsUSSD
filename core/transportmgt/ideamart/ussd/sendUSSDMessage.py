@@ -17,15 +17,11 @@ def sendUSSDMessage(messageBody):
            "encoding": messageBody.encording,
            "version": messageBody.version
            }
-    # form_data = json.dumps(res)
     logging.error("Print payload")
-    # logging.error(form_data)
     logging.error("url: " + messageBody.url)
-    #data = urllib.urlencode(res)
     req = urllib2.Request(messageBody.url, data=json.dumps(res), headers={"Content-Type": "application/json", "Accept": "application/json"})
     response = urllib2.urlopen(req)
     result = response.read()
-    # result = requests.post(url=messageBody.url, data=form_data)
     logging.error("Result content")
     logging.error(result)
 

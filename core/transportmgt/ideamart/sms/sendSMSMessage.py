@@ -1,4 +1,5 @@
 import logging
+import urllib2
 
 import run_config
 
@@ -14,13 +15,14 @@ def sendSMSMessage(messageBody):
            }
 
     logging.error(res)
-    form_data = json.dumps(res)
-    # logging.info(form_data)
-    result = requests.post(url=messageBody.url, data=form_data)
-    logging.error("SMS result")
-    logging.error(result.content)
+    req = urllib2.Request(messageBody.url, data=json.dumps(res),
+                          headers={"Content-Type": "application/json", "Accept": "application/json"})
+    response = urllib2.urlopen(req)
+    result = response.read()
+    logging.error("Result content")
+    logging.error(result)
 
-    if result.status_code == 200:
+    if response.getcode() == 200:
         logging.error('*** Message delivered Successfully! ****')
     else:
-        logging.error('*** Message was not delivered Successfully!! ERROR-CODE: ' + str(result.status_code) +  ' ****')
+        logging.error('*** Message was not delivered Successfully!! ERROR-CODE: ' + str(response.getcode()) +  ' ****')

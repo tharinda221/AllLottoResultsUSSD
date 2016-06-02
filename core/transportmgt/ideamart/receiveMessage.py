@@ -54,7 +54,7 @@ class ReceiveMessage(Resource):
                                         destAddress=decoded_json["sourceAddress"],
                                         applicationID=decoded_json["applicationId"])
             sendUSSDMessage(USSDmessage)
-            #sendSMSMessage(SMSmessage)
+            sendSMSMessage(SMSmessage)
             Application.messageFlow = 1
         else:
             logging.error("mo-cont Request Came")
