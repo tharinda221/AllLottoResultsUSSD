@@ -25,6 +25,7 @@ def LotteryResult(number, dn):
 
 class ReceiveMessage(Resource):
     def get(self):
+        logging.error("Telco App is running")
         logging.error(request.data)
         response = make_response("Hello, Telco App is running")
         response.headers['Content-Type'] = 'application/json'
