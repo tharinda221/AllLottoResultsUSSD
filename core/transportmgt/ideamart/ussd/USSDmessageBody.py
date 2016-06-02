@@ -7,9 +7,7 @@ class USSDmessageBody:
                  encording="",
                  sessionId="",
                  ussdOperation="",
-                 version="",
-                 requestId=""):
-        self.requestId = requestId
+                 version=""):
         self.version = version
         self.ussdOperation = ussdOperation
         self.sessionId = sessionId

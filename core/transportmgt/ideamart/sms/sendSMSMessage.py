@@ -8,7 +8,7 @@ from flask import json
 
 def sendSMSMessage(messageBody):
     res = {'message': messageBody.message,
-           "destinationAddresses": messageBody.destAddress,
+           "destinationAddress": messageBody.destAddress,
            "password": messageBody.password,
            "applicationId": messageBody.applicationID
            }
@@ -17,7 +17,7 @@ def sendSMSMessage(messageBody):
     form_data = json.dumps(res)
     # logging.info(form_data)
     result = requests.post(url=messageBody.url, data=form_data)
-
+    logging.error("SMS result")
     logging.error(result.content)
 
     if result.status_code == 200:
