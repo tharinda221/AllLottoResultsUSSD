@@ -22,6 +22,9 @@ class UserDAO:
                     "count": user.count
                 }
             )
+        else:
+            count = dao.getUser(user.address).count
+            dao.updateUserCount(user.address, count)
 
     def userExist(self, address):
         if DatabaseCollections.userCollection.find({"address": address}).count() > 0:
@@ -112,8 +115,10 @@ class UserDAO:
         :param address: App used Count of the user
         :return: List
         """
-        user = DatabaseCollections.userCollection.find({"address": address})
-        if user is None:
+        data = DatabaseCollections.userCollection.find({"address": address})
+
+        if data is None:
             return None
         else:
+            user = User(data["address"], data["index"], data["messageFlow"], data["lotteryList"], data["count"])
             return user

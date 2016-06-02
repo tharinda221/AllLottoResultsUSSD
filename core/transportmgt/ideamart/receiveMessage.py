@@ -65,6 +65,8 @@ class ReceiveMessage(Resource):
         else:
             logging.error("mo-cont Request Came")
             user = dao.getUser(decoded_json["sourceAddress"])
+            logging.error("user: ")
+            logging.error(user)
             Application.messageFlow = user.messageFlow
             try:
                 requestNumber = int(decoded_json["message"])
