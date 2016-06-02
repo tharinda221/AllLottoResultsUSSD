@@ -50,9 +50,9 @@ class ReceiveMessage(Resource):
                                           applicationID=decoded_json["applicationId"]
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
-            SMSmessage = SMSmessageBody(message="hello world!", password=Ideamart.password, url=Ideamart.SMSUrl,
-                                        destAddress=decoded_json["sourceAddress"],
-                                        applicationID=decoded_json["applicationId"])
+            # SMSmessage = SMSmessageBody(message="hello world!", password=Ideamart.password, url=Ideamart.SMSUrl,
+            #                             destAddress=decoded_json["sourceAddress"],
+            #                             applicationID=decoded_json["applicationId"])
             sendUSSDMessage(USSDmessage)
             #sendSMSMessage(SMSmessage)
             Application.messageFlow = 1
@@ -60,6 +60,7 @@ class ReceiveMessage(Resource):
             logging.error("mo-cont Request Came")
             try:
                 requestNumber = int(decoded_json["message"])
+                logging.error(requestNumber)
                 if requestNumber == 0:
                     Application.messageFlow -= 2
                 if Application.messageFlow == 0:
@@ -73,7 +74,7 @@ class ReceiveMessage(Resource):
                     sendUSSDMessage(USSDmessage)
                     Application.messageFlow = 1
                 elif Application.messageFlow == 1:
-                    if (1 <= int(decoded_json["message"]) <= (Application.dlbListSize + Application.nlbListSize)):
+                    if (1 <= requestNumber <= (Application.dlbListSize + Application.nlbListSize)):
                         Application.index = requestNumber
                         USSDmessage = USSDmessageBody(message=Application.getDrawNumber,
                                                       password=Ideamart.password, url=Ideamart.USSDUrl,
