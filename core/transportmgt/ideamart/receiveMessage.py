@@ -44,7 +44,7 @@ class ReceiveMessage(Resource):
             Application.dlbListSize = len(Application.dlbList)
             message = getMessage(Application.nlbList, Application.dlbList)
             logging.error(message)
-            USSDmessage = USSDmessageBody(message=message,
+            USSDmessage = USSDmessageBody(message="message",
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
                                           destAddress=decoded_json["sourceAddress"],
                                           applicationID=decoded_json["applicationId"]
