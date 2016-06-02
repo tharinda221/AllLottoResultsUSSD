@@ -4,7 +4,7 @@ from __init__ import *
 def getDataFromNLB():
     nlb_result_list = {}
     data = requests.get(LotteryMgtNLB.nlb_data_fetch).content
-    NLB_lottery_list = BeautifulSoup(data).find_all("a", {"class": "bodyText"})
+    NLB_lottery_list = BeautifulSoup(data, "html5lib").find_all("a", {"class": "bodyText"})
     for i in NLB_lottery_list:
         changed_url = str(
             LotteryMgtNLB.nlb_data_result + str(i.get("href")).replace("lot", "id").replace("info", "more"))
@@ -17,7 +17,7 @@ def getNLBResult(dn, index, dataList):
     if index <= len(dataList):
         lot = dataList.values()[index]
         data = requests.get(LotteryMgtNLB.nlb_data_result + LotteryMgtNLB.nlb_show_result + lot + "&dno=" + dn).content
-        soup = BeautifulSoup(data)
+        soup = BeautifulSoup(data, "html5lib")
         try:
             wining_numbers = soup.find("table", {"class": "lottery-numbers"}).find_all("td")
             for a in wining_numbers:
