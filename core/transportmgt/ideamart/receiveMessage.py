@@ -33,6 +33,7 @@ class ReceiveMessage(Resource):
         return response
 
     def post(self):
+        logging.error("POST Request Came")
         logging.error("\n\n**** HTTP Request:\n" + request.data + "****\n\n")
         received_content = request.data
         decoded_json = json.loads(received_content)
