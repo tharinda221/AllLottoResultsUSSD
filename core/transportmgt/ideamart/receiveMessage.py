@@ -57,6 +57,7 @@ class ReceiveMessage(Resource):
             sendSMSMessage(SMSmessage)
             Application.messageFlow = 1
         else:
+            logging.error("mo-cont Request Came")
             try:
                 requestNumber = int(decoded_json["message"])
                 if requestNumber == 0:
