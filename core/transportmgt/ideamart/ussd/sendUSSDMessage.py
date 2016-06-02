@@ -3,6 +3,7 @@ from flask import json
 import logging
 import run_config
 
+
 def sendUSSDMessage(messageBody):
     res = {'message': messageBody.message,
            "destinationAddress": messageBody.destAddress,
@@ -13,10 +14,9 @@ def sendUSSDMessage(messageBody):
            "encoding": messageBody.encording,
            "version": messageBody.version
            }
-
-    logging.error(res)
     form_data = json.dumps(res)
-    # logging.info(form_data)
+    logging.error("Print payload")
+    logging.error(form_data)
     result = requests.post(url=messageBody.url, data=form_data)
 
     logging.error(result.content)
