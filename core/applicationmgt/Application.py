@@ -126,8 +126,10 @@ def AllLotto(decoded_json):
                     Application.nlbListSize = len(Application.nlbList)
                     Application.dlbList = getDataFromDLB()
                     Application.dlbListSize = len(Application.dlbList)
-                    USSDmessage = USSDmessageBody(message=LotteryResult(user.index, str(
-                        requestNumber)) + "\n" + "0. Thava balanna" + "\n" + "000. Exit",
+                    result = LotteryResult(user.index, str(requestNumber))
+                    logging.error("Result")
+                    logging.error(result)
+                    USSDmessage = USSDmessageBody(message= result + "\n" + "0. Thava balanna" + "\n" + "000. Exit",
                                                   password=Ideamart.password, url=Ideamart.USSDUrl,
                                                   destAddress=decoded_json["sourceAddress"],
                                                   applicationID=decoded_json["applicationId"]
