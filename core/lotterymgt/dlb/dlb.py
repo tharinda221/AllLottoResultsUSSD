@@ -1,5 +1,9 @@
 from __init__ import *
 
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 def getDataFromDLB():
     dlb_result_list = {}
