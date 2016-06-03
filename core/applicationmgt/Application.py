@@ -127,6 +127,7 @@ def AllLotto(decoded_json):
                     Application.dlbList = getDataFromDLB()
                     Application.dlbListSize = len(Application.dlbList)
                     result = LotteryResult(user.index, str(requestNumber))
+                    result = result.replace('\xc2\xa0', ' ')
                     logging.error("Result")
                     logging.error(result)
                     USSDmessage = USSDmessageBody(message= result + "\n" + "0. Thava balanna" + "\n" + "000. Exit",

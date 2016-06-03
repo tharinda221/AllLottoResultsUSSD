@@ -17,10 +17,8 @@ def getDLBResult(dn, index, DataList):
                                  urlencode({"db": DataList.values()[index], "dn": dn, "ename": ""}).encode())
         numberList = BeautifulSoup(urllib2.urlopen(result).read().decode(), "html5lib").findAll("div", {"align": "right"})
         numberList.pop(0)
-        returnList = []
         for i in numberList:
-            returnList.append(i.string)
-        wining_numbers_set = ' '.join(returnList)
+            wining_numbers_set += i.string
         if wining_numbers_set == "":
             return "Oba yomu kala dinum wara ankaya waradiya nathohoth thama dinum ada nomatha"
         else:
