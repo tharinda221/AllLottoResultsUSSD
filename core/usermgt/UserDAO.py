@@ -24,7 +24,8 @@ class UserDAO:
             )
         else:
             count = dao.getUser(user.address).count
-            dao.updateUserCount(user.address, count)
+            dao.updateUserCount(user.address, count+1)
+            dao.updateUserMessageFlow(user.address, 1)
 
     def userExist(self, address):
         if DatabaseCollections.userCollection.find({"address": address}).count() > 0:

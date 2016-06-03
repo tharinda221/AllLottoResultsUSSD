@@ -28,7 +28,7 @@ def getNLBResult(dn, index, dataList):
                 "").replace(
                 "\\", "")
         except:
-            return "wrong dn"
+            return "Oba yomu kala dinum wara ankaya waradiya nathohoth thama dinum ada nomatha"
     else:
         return "wrong index"
 

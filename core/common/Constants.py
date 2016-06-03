@@ -39,8 +39,9 @@ class Application:
     dlbListSize = 0
     nlbList = {}
     dlbList = {}
-    ErrorMessage = "Please Enter a number between given choices" + "\n" + "0. Back" + "\n" + "99. Exit"
-    getDrawNumber = "Please Enter draw number(Dinum wara ankaya)" + "\n" + "0. Back" + "\n" + "99. Exit"
+    ErrorMessage = "Please Enter a number between given choices" + "\n" + "0. Back" + "\n" + "000. Exit"
+    getDrawNumber = "Please Enter draw number(Dinum wara ankaya)" + "\n" + "0. Back" + "\n" + "000. Exit"
+    EndMessage = "Thank You For use." + "\n" + "lottery anka balanna #775*910# number eka save kara ganna"
 
 
 class DatabaseCollections:

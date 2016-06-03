@@ -15,10 +15,12 @@ def getDLBResult(dn, index, DataList):
     if index <= len(DataList):
         result = urllib2.Request(LotteryMgtDLB.dlb_data_result,
                                  urlencode({"db": DataList.values()[index], "dn": dn, "ename": ""}).encode())
-        for i in BeautifulSoup(urllib2.urlopen(result).read().decode()).findAll("div", {"align": "right"}, "html5lib"):
+        numberList = BeautifulSoup(urllib2.urlopen(result).read().decode()).findAll("div", {"align": "right"}, "html5lib")
+        numberList.pop(0)
+        for i in numberList:
             wining_numbers_set += i.string
         if wining_numbers_set == "":
-            return "Wrong dn"
+            return "Oba yomu kala dinum wara ankaya waradiya nathohoth thama dinum ada nomatha"
         else:
             return wining_numbers_set
     else:
