@@ -1,5 +1,6 @@
 from core.dbmgt.getConnection import *
 
+
 class LotteryMgtDLB:
     def __init__(self):
         pass
@@ -21,12 +22,15 @@ class Ideamart:
     def __init__(self):
         pass
 
-    password = "0dcd163c817972cdf74a81446f8f8b3f"
-    SMSUrl = "https://api.dialog.lk/sms/send"
-    USSDUrl = "https://api.dialog.lk/ussd/send"
-    # password = "password"
-    # SMSUrl = "http://localhost:7000/sms/send"
-    # USSDUrl = "http://localhost:7000/ussd/send"
+    Amount = "3"
+    # password = "0dcd163c817972cdf74a81446f8f8b3f"
+    # SMSUrl = "https://api.dialog.lk/sms/send"
+    # USSDUrl = "https://api.dialog.lk/ussd/send"
+    # CAASUrl = "https://api.dialog.lk/caas/direct/debit"
+    password = "password"
+    SMSUrl = "http://localhost:7000/sms/send"
+    USSDUrl = "http://localhost:7000/ussd/send"
+    CAASUrl = "http://localhost:7000/caas/direct/debit"
 
 
 class Application:

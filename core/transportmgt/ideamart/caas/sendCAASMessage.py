@@ -5,15 +5,12 @@ from flask import json
 import logging
 
 
-def sendUSSDMessage(messageBody):
-    res = {'message': messageBody.message,
-           "destinationAddress": messageBody.destAddress,
+def sendCAASMessage(messageBody):
+    res = {'applicationId': messageBody.applicationID,
            "password": messageBody.password,
-           "applicationId": messageBody.applicationID,
-           "ussdOperation": messageBody.ussdOperation,
-           "sessionId": messageBody.sessionId,
-           "encoding": messageBody.encording,
-           "version": messageBody.version
+           "externalTrxId": messageBody.ExternalTrxId,
+           "subscriberId": messageBody.SubscriberId,
+           "amount": messageBody.Amount
            }
     logging.error("Print payload")
     logging.error(json.dumps(res))

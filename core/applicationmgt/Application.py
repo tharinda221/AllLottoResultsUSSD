@@ -2,7 +2,7 @@ from __init__ import *
 
 from core.usermgt.User import User
 from core.usermgt.UserDAO import UserDAO
-
+import random
 
 def getMessage(nlbList, dlbList):
     count = 1
@@ -25,6 +25,10 @@ def LotteryResult(number, dn):
         out = getDLBResult(dn, number - Application.nlbListSize, Application.dlbList)
         return out
 
+def getExternalTrxId():
+    Min = 1000000
+    Max = 2000000
+    return Min + (int)(random.random() * ((Max - Min) + 1))
 
 def AllLotto(decoded_json):
     # user DAO initiated
@@ -41,6 +45,10 @@ def AllLotto(decoded_json):
         user = User(address=decoded_json["sourceAddress"], index=0, messageFlow=1, lotteryList=[],
                     count=1)
         dao.createUser(user)
+        CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
+                                      SubscriberId=decoded_json["sourceAddress"],
+                                      applicationID=decoded_json["applicationId"],ExternalTrxId=getExternalTrxId(),
+                                      Amount=Ideamart.Amount)
         USSDmessage = USSDmessageBody(message=message,
                                       password=Ideamart.password, url=Ideamart.USSDUrl,
                                       destAddress=decoded_json["sourceAddress"],
@@ -48,6 +56,7 @@ def AllLotto(decoded_json):
                                       , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                       ussdOperation="mt-cont", version=decoded_json["version"])
         sendUSSDMessage(USSDmessage)
+        sendCAASMessage(CAASmessage)
     #
     else:
         logging.error("mo-cont Request Came")
@@ -130,7 +139,7 @@ def AllLotto(decoded_json):
                     result = result.replace('\xc2\xa0', ' ')
                     logging.error("Result")
                     logging.error(result)
-                    USSDmessage = USSDmessageBody(message= result + "\n" + "0. Thava balanna" + "\n" + "000. Exit",
+                    USSDmessage = USSDmessageBody(message=result + "\n" + "0. Thava balanna" + "\n" + "000. Exit",
                                                   password=Ideamart.password, url=Ideamart.USSDUrl,
                                                   destAddress=decoded_json["sourceAddress"],
                                                   applicationID=decoded_json["applicationId"]
