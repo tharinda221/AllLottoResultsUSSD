@@ -48,6 +48,11 @@ def AllLotto(decoded_json):
         user = User(address=decoded_json["sourceAddress"], index=0, messageFlow=1, lotteryList=[],
                     count=1)
         dao.createUser(user)
+
+        SMSMessage = SMSmessageBody(message=Application.initSMS, password=Ideamart.password, url=Ideamart.SMSUrl,
+                                    destAddress=decoded_json["sourceAddress"],
+                                    applicationID=decoded_json["applicationId"])
+
         SubscriptionMessage = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
                                                       password=Ideamart.password, url=Ideamart.SubscriptionUrl,
                                                       applicationID=decoded_json["applicationId"], action="1",
@@ -64,8 +69,10 @@ def AllLotto(decoded_json):
                                       ussdOperation="mt-cont", version=decoded_json["version"])
         # user subscription
         sendSubscriptionMessage(SubscriptionMessage)
+        # send message
+        sendSMSMessage(SMSMessage)
         sendUSSDMessage(USSDmessage)
-        #sendCAASMessage(CAASmessage)
+        # sendCAASMessage(CAASmessage)
     #
     else:
         logging.error("mo-cont Request Came")
