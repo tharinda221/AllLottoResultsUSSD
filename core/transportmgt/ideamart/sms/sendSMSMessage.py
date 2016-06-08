@@ -1,9 +1,5 @@
 import logging
 import urllib2
-
-import run_config
-
-import requests
 from flask import json
 
 

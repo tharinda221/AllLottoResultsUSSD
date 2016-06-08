@@ -4,6 +4,7 @@ from core.usermgt.User import User
 from core.usermgt.UserDAO import UserDAO
 import random
 
+
 def getMessage(nlbList, dlbList):
     count = 1
     output = ""
@@ -25,10 +26,12 @@ def LotteryResult(number, dn):
         out = getDLBResult(dn, number - Application.nlbListSize, Application.dlbList)
         return out
 
+
 def getExternalTrxId():
     Min = 1000000
     Max = 2000000
     return Min + (int)(random.random() * ((Max - Min) + 1))
+
 
 def AllLotto(decoded_json):
     # user DAO initiated
@@ -45,9 +48,13 @@ def AllLotto(decoded_json):
         user = User(address=decoded_json["sourceAddress"], index=0, messageFlow=1, lotteryList=[],
                     count=1)
         dao.createUser(user)
+        SubscriptionMessage = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
+                                                      password=Ideamart.password, url=Ideamart.SubscriptionUrl,
+                                                      applicationID=decoded_json["applicationId"], action="1",
+                                                      version=decoded_json["version"])
         CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
                                       SubscriberId=decoded_json["sourceAddress"],
-                                      applicationID=decoded_json["applicationId"],ExternalTrxId=getExternalTrxId(),
+                                      applicationID=decoded_json["applicationId"], ExternalTrxId=getExternalTrxId(),
                                       Amount=Ideamart.Amount)
         USSDmessage = USSDmessageBody(message=message,
                                       password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -55,6 +62,8 @@ def AllLotto(decoded_json):
                                       applicationID=decoded_json["applicationId"]
                                       , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                       ussdOperation="mt-cont", version=decoded_json["version"])
+        # user subscription
+        sendSubscriptionMessage(SubscriptionMessage)
         sendUSSDMessage(USSDmessage)
         sendCAASMessage(CAASmessage)
     #

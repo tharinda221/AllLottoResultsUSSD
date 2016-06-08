@@ -27,10 +27,12 @@ class Ideamart:
     # SMSUrl = "https://api.dialog.lk/sms/send"
     # USSDUrl = "https://api.dialog.lk/ussd/send"
     # CAASUrl = "https://api.dialog.lk/caas/direct/debit"
+    # SubscriptionUrl = "https://api.dialog.lk/subscription/send"
     password = "password"
     SMSUrl = "http://localhost:7000/sms/send"
     USSDUrl = "http://localhost:7000/ussd/send"
     CAASUrl = "http://localhost:7000/caas/direct/debit"
+    SubscriptionUrl = "http://localhost:7000/subscription/send"
 
 
 class Application:

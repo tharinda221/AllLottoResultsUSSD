@@ -1,7 +1,7 @@
 # configure the app
 import os
 from datetime import timedelta
-from run_config import *
+from controller import *
 import logging
 from logging import Formatter, FileHandler
 
