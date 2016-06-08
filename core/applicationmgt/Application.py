@@ -65,7 +65,7 @@ def AllLotto(decoded_json):
         # user subscription
         sendSubscriptionMessage(SubscriptionMessage)
         sendUSSDMessage(USSDmessage)
-        sendCAASMessage(CAASmessage)
+        #sendCAASMessage(CAASmessage)
     #
     else:
         logging.error("mo-cont Request Came")
