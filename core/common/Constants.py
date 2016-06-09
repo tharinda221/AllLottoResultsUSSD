@@ -22,7 +22,7 @@ class Ideamart:
     def __init__(self):
         pass
 
-    Amount = "3"
+    Amount = "5"
     password = "0dcd163c817972cdf74a81446f8f8b3f"
     SMSUrl = "https://api.dialog.lk/sms/send"
     USSDUrl = "https://api.dialog.lk/ussd/send"
