@@ -72,7 +72,7 @@ def AllLotto(decoded_json):
         # send message
         #sendSMSMessage(SMSMessage)
         sendUSSDMessage(USSDmessage)
-        # sendCAASMessage(CAASmessage)
+        sendCAASMessage(CAASmessage)
     #
     else:
         logging.error("mo-cont Request Came")
