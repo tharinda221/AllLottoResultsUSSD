@@ -70,7 +70,7 @@ def AllLotto(decoded_json):
         # user subscription
         sendSubscriptionMessage(SubscriptionMessage)
         # send message
-        sendSMSMessage(SMSMessage)
+        # sendSMSMessage(SMSMessage)
         sendUSSDMessage(USSDmessage)
         sendCAASMessage(CAASmessage)
     #
