@@ -5,7 +5,7 @@ from flask import json
 
 def sendSMSMessage(messageBody):
     res = {'message': messageBody.message,
-           "destinationAddress": messageBody.destAddress,
+           "destinationAddresses": messageBody.destAddress,
            "password": messageBody.password,
            "applicationId": messageBody.applicationID
            }
