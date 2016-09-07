@@ -19,7 +19,8 @@ class UserDAO:
                     "index": user.index,
                     "messageFlow": user.messageFlow,
                     "lotteryList": user.lotteryList,
-                    "count": user.count
+                    "count": user.count,
+                    "newUser": user.newUser
                 }
             )
         else:
@@ -47,6 +48,25 @@ class UserDAO:
                 },
                 {"$set": {
                     "index": index
+                }})
+            return True
+        except IOError:
+            return False
+
+    def updateUserElder(self, address, newUser):
+        """
+        Update user message flow
+        :param address: Phone number of the user that need to be updated.
+        :param messageFlow: user message flow number
+        :return: True or False
+        """
+        try:
+            DatabaseCollections.userCollection.update_one(
+                {
+                    "address": address
+                },
+                {"$set": {
+                    "newUser": newUser
                 }})
             return True
         except IOError:
@@ -120,5 +140,5 @@ class UserDAO:
         if data is None:
             return None
         else:
-            user = User(data["address"], data["index"], data["messageFlow"], data["lotteryList"], data["count"])
+            user = User(data["address"], data["index"], data["messageFlow"], data["lotteryList"], data["count"], data["newUser"])
             return user

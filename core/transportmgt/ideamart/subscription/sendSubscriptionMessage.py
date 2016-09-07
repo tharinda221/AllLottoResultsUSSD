@@ -17,10 +17,13 @@ def sendSubscriptionMessage(messageBody):
                           headers={"Content-Type": "application/json", "Accept": "application/json"})
     response = urllib2.urlopen(req)
     result = response.read()
-    logging.error("Result content")
+    logging.error("subscription result")
     logging.error(result)
+    jsonResult = json.loads(result)
+    print result
 
     if response.getcode() == 200:
         logging.error('*** Message delivered Successfully! ****')
     else:
         logging.error('*** Message was not delivered Successfully!! ERROR-CODE: ' + str(response.getcode()) + ' ****')
+    return jsonResult["statusDetail"]

@@ -4,7 +4,8 @@ class User:
                  index = 0,
                  messageFlow = 0,
                  lotteryList=[],
-                 count=0):
+                 count=0,
+                 newUser=""):
         """
         :param address: User Phone Number
         :param index: session index
@@ -12,6 +13,7 @@ class User:
         :param lotteryList: user previous lottery details
         :param count: user app used count
         """
+        self.newUser = newUser
         self.count = count
         self.lotteryList = lotteryList
         self.messageFlow = messageFlow
