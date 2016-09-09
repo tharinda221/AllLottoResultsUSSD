@@ -10,4 +10,4 @@ api = Api(app)
 
 api.add_resource(ReceiveMessage, '/ussdReceiver')
 api.add_resource(CASSNotification, '/caasNotification')
-api.add_resource(sendMessageToAll, '/sendMessageToAll/<message>')
+api.add_resource(sendMessageToAll, '/sendMessageToAll/<address>/<message>')

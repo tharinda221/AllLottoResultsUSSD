@@ -33,9 +33,9 @@ def getExternalTrxId():
     return Min + (int)(random.random() * ((Max - Min) + 1))
 
 
-def sendMessageToAllUsers(message):
+def sendMessageToAllUsers(message, address):
     SMSMessage = SMSmessageBody(message=message, password=Ideamart.password, url=Ideamart.SMSUrl,
-                                destAddress="tel:all",
+                                destAddress=address,
                                 applicationID=Ideamart.appId)
     sendSMSMessage(SMSMessage)
 
@@ -44,6 +44,7 @@ def AllLotto(decoded_json):
     # user DAO initiated
     dao = UserDAO()
     # identifying initial request came from user
+    print decoded_json["sourceAddress"]
     if decoded_json["ussdOperation"] == "mo-init":
         # fetch data from lottery database
         Application.nlbList = getDataFromNLB()
