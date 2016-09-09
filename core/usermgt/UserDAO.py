@@ -24,6 +24,7 @@ class UserDAO:
                 }
             )
         else:
+            dao.updateUserElder(user.address, "False")
             count = dao.getUser(user.address).count
             dao.updateUserCount(user.address, count+1)
             dao.updateUserMessageFlow(user.address, 1)
