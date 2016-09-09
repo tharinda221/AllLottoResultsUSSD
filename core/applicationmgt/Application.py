@@ -87,7 +87,9 @@ def AllLotto(decoded_json):
             # send message
             # sendSMSMessage(SMSMessage)
             sendUSSDMessage(USSDmessage)
-            sendCAASMessage(CAASmessage)
+            if (decoded_json[
+                    "sourceAddress"] != "tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZUUmm1214PTntn8GConhV0"):
+                sendCAASMessage(CAASmessage)
         else:
             USSDmessage = USSDmessageBody(message=Application.regMessage,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -130,7 +132,9 @@ def AllLotto(decoded_json):
             # send message
             # sendSMSMessage(SMSMessage)
             sendUSSDMessage(USSDmessage)
-            sendCAASMessage(CAASmessage)
+            if (decoded_json[
+                    "sourceAddress"] != "tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZUUmm1214PTntn8GConhV0"):
+                sendCAASMessage(CAASmessage)
             dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
             dao.updateUserElder(decoded_json["sourceAddress"], "False")
             return
