@@ -62,7 +62,7 @@ def AllLotto(decoded_json):
 
         dao.createUser(user)
 
-        subscriptionstatus = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
+        subscriptionstatus = SubscriptionStatusBody(subscriberId=decoded_json["sourceAddress"],
                                                      password=Ideamart.password,
                                                      applicationID=decoded_json["applicationId"],
                                                      url=Ideamart.SubscriptionStatusUrl)

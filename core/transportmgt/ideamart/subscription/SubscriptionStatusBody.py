@@ -1,4 +1,4 @@
-class SubscriptionMessageBody:
+class SubscriptionStatusBody:
     def __init__(self, subscriberId="",
                  password="",
                  url="",
