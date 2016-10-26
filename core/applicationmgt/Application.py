@@ -70,7 +70,6 @@ def AllLotto(decoded_json):
         SMSMessage = SMSmessageBody(message=Application.initSMS, password=Ideamart.password, url=Ideamart.SMSUrl,
                                     destAddress=decoded_json["sourceAddress"],
                                     applicationID=decoded_json["applicationId"])
-        print getSubscriptionStatus(subscriptionstatus)
         SubscriptionMessage = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
                                                       password=Ideamart.password, url=Ideamart.SubscriptionUrl,
                                                       applicationID=decoded_json["applicationId"], action="1",
@@ -89,6 +88,7 @@ def AllLotto(decoded_json):
                                           ussdOperation="mt-cont", version=decoded_json["version"])
             # user subscription
             sendSubscriptionMessage(SubscriptionMessage)
+            print getSubscriptionStatus(subscriptionstatus)
             # send message
             # sendSMSMessage(SMSMessage)
             sendUSSDMessage(USSDmessage)
