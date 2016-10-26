@@ -30,6 +30,8 @@ class Ideamart:
     USSDUrl = "https://api.dialog.lk/ussd/send"
     CAASUrl = "https://api.dialog.lk/caas/direct/debit"
     SubscriptionUrl = "https://api.dialog.lk/subscription/send"
+    SubscriptionStatusUrl = "https://api.dialog.lk/subscription/getStatus"
+
     # Run locally
     # appId = "APP_000001"
     # password = "password"
@@ -37,6 +39,7 @@ class Ideamart:
     # USSDUrl = "http://localhost:7000/ussd/send"
     # CAASUrl = "http://localhost:7000/caas/direct/debit"
     # SubscriptionUrl = "http://localhost:7000/subscription/send"
+    # SubscriptionStatusUrl = "http://localhost:7000/subscription/getStatus"
 
 
 class Application:
@@ -54,6 +57,7 @@ class Application:
     EndMessage = "Thank You For use." + "\n" + "lottery anka balanna #775*910# number eka save kara ganna"
     initSMS = "Lottery Result balanna #775*910# ankaya save kara ganna"
     regMessage = "1. Register"
+
 
 class DatabaseCollections:
     def __init__(self):

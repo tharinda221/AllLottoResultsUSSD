@@ -62,10 +62,15 @@ def AllLotto(decoded_json):
 
         dao.createUser(user)
 
-        # SMSMessage = SMSmessageBody(message=Application.initSMS, password=Ideamart.password, url=Ideamart.SMSUrl,
-        #                             destAddress=decoded_json["sourceAddress"],
-        #                             applicationID=decoded_json["applicationId"])
+        subscriptionstatus = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
+                                                     password=Ideamart.password,
+                                                     applicationID=decoded_json["applicationId"],
+                                                     url=Ideamart.SubscriptionStatusUrl)
 
+        SMSMessage = SMSmessageBody(message=Application.initSMS, password=Ideamart.password, url=Ideamart.SMSUrl,
+                                    destAddress=decoded_json["sourceAddress"],
+                                    applicationID=decoded_json["applicationId"])
+        print getSubscriptionStatus(subscriptionstatus)
         SubscriptionMessage = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
                                                       password=Ideamart.password, url=Ideamart.SubscriptionUrl,
                                                       applicationID=decoded_json["applicationId"], action="1",
@@ -90,6 +95,7 @@ def AllLotto(decoded_json):
             if (decoded_json[
                     "sourceAddress"] != "tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZUUmm1214PTntn8GConhV0"):
                 sendCAASMessage(CAASmessage)
+            sendSMSMessage(SMSMessage)
         else:
             USSDmessage = USSDmessageBody(message=Application.regMessage,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -98,6 +104,7 @@ def AllLotto(decoded_json):
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
             sendUSSDMessage(USSDmessage)
+            sendSMSMessage(SMSMessage)
     #
     else:
         logging.error("mo-cont Request Came")
