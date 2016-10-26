@@ -40,7 +40,7 @@ def getSubscriptionStatus(messageBody):
 
     response = urllib2.urlopen(req)
     result = response.read()
-    logging.error("subscription result")
+    logging.error("subscription status result")
     logging.error(result)
     jsonResult = json.loads(result)
     print result
