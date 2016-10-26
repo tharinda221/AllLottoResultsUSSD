@@ -9,5 +9,6 @@ app = Flask(__name__)
 api = Api(app)
 
 api.add_resource(ReceiveMessage, '/ussdReceiver')
+api.add_resource(SMSReceive, '/smsReceiver')
 api.add_resource(CASSNotification, '/caasNotification')
 api.add_resource(sendMessageToAll, '/sendMessageToAll/<address>/<message>')
