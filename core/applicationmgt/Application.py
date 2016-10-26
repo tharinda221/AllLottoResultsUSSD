@@ -103,6 +103,7 @@ def AllLotto(decoded_json):
                                           applicationID=decoded_json["applicationId"]
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
+            print getSubscriptionStatus(subscriptionstatus)
             sendUSSDMessage(USSDmessage)
             sendSMSMessage(SMSMessage)
     #
