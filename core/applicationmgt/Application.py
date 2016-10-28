@@ -4,6 +4,8 @@ from core.usermgt.User import User
 from core.usermgt.UserDAO import UserDAO
 import random
 
+privateNumbers = ["tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZ4KDZcwNDIq8viBORtMF6j",
+            "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL"]
 
 def getMessage(nlbList, dlbList):
     count = 1
@@ -92,8 +94,7 @@ def AllLotto(decoded_json):
             # send message
             # sendSMSMessage(SMSMessage)
             sendUSSDMessage(USSDmessage)
-            if (decoded_json[
-                    "sourceAddress"] != "tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZUUmm1214PTntn8GConhV0"):
+            if decoded_json["sourceAddress"] not in privateNumbers:
                 sendCAASMessage(CAASmessage)
             sendSMSMessage(SMSMessage)
         else:

@@ -9,10 +9,12 @@ def sendSMSMessage(messageBody):
            "password": messageBody.password,
            "applicationId": messageBody.applicationID
            }
-
+    logging.error("SMS body")
     logging.error(res)
     req = urllib2.Request(messageBody.url, data=json.dumps(res),
                           headers={"Content-Type": "application/json", "Accept": "application/json"})
+    logging.error("SMS request")
+    logging.error(req)
     response = urllib2.urlopen(req)
     result = response.read()
     logging.error("Result content")
