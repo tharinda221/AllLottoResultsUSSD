@@ -4,8 +4,10 @@ from flask import json
 
 
 def sendSMSMessage(messageBody):
+    destAddresses = []
+    destAddresses.append(messageBody.destAddress)
     res = {'message': messageBody.message,
-           "destinationAddresses": messageBody.destAddress,
+           "destinationAddresses": destAddresses,
            "password": messageBody.password,
            "applicationId": messageBody.applicationID
            }
@@ -14,7 +16,6 @@ def sendSMSMessage(messageBody):
     req = urllib2.Request(messageBody.url, data=json.dumps(res),
                           headers={"Content-Type": "application/json", "Accept": "application/json"})
     logging.error("SMS request")
-    logging.error(req)
     response = urllib2.urlopen(req)
     result = response.read()
     logging.error("Result content")
