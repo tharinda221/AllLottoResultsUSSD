@@ -5,7 +5,8 @@ from core.usermgt.UserDAO import UserDAO
 import random
 
 privateNumbers = ["tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZ4KDZcwNDIq8viBORtMF6j",
-            "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL"]
+            "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL",
+                  "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandNiOoeb2KN1wLxBRD6LLcPh"]
 
 def getMessage(nlbList, dlbList):
     count = 1
@@ -46,7 +47,6 @@ def AllLotto(decoded_json):
     # user DAO initiated
     dao = UserDAO()
     # identifying initial request came from user
-    print decoded_json["sourceAddress"]
     if decoded_json["ussdOperation"] == "mo-init":
         # fetch data from lottery database
         Application.nlbList = getDataFromNLB()
@@ -55,27 +55,17 @@ def AllLotto(decoded_json):
         Application.dlbListSize = len(Application.dlbList)
         # initiate the user object
         userExist = dao.userExist(decoded_json["sourceAddress"])
-        if not userExist:
-            user = User(address=decoded_json["sourceAddress"], index=0, messageFlow=1, lotteryList=[],
-                        count=1, newUser="False")
+        if userExist:
+            dao.updateUserElder(decoded_json["sourceAddress"], "False")
         else:
             user = User(address=decoded_json["sourceAddress"], index=0, messageFlow=1, lotteryList=[],
                         count=1, newUser="True")
-
-        dao.createUser(user)
+            dao.createUser(user)
 
         subscriptionstatus = SubscriptionStatusBody(subscriberId=decoded_json["sourceAddress"],
-                                                     password=Ideamart.password,
-                                                     applicationID=decoded_json["applicationId"],
-                                                     url=Ideamart.SubscriptionStatusUrl)
-
-        SMSMessage = SMSmessageBody(message=Application.initSMS, password=Ideamart.password, url=Ideamart.SMSUrl,
-                                    destAddress=decoded_json["sourceAddress"],
-                                    applicationID=decoded_json["applicationId"])
-        CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
-                                      SubscriberId=decoded_json["sourceAddress"],
-                                      applicationID=decoded_json["applicationId"], ExternalTrxId=getExternalTrxId(),
-                                      Amount=Ideamart.Amount)
+                                                    password=Ideamart.password,
+                                                    applicationID=decoded_json["applicationId"],
+                                                    url=Ideamart.SubscriptionStatusUrl)
         if getSubscriptionStatus(subscriptionstatus):
             message = getMessage(Application.nlbList, Application.dlbList)
             USSDmessage = USSDmessageBody(message=message,
@@ -88,6 +78,11 @@ def AllLotto(decoded_json):
 
             sendUSSDMessage(USSDmessage)
             if decoded_json["sourceAddress"] not in privateNumbers:
+                CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
+                                              SubscriberId=decoded_json["sourceAddress"],
+                                              applicationID=decoded_json["applicationId"],
+                                              ExternalTrxId=getExternalTrxId(),
+                                              Amount=Ideamart.Amount)
                 sendCAASMessage(CAASmessage)
         else:
             dao.updateUserElder(decoded_json["sourceAddress"], "True")
@@ -101,7 +96,7 @@ def AllLotto(decoded_json):
             sendUSSDMessage(USSDmessage)
     #
     else:
-        logging.error("mo-cont Request Came")
+
         user = dao.getUser(decoded_json["sourceAddress"])
         # fetch data from lottery database
         Application.nlbList = getDataFromNLB()
@@ -109,19 +104,7 @@ def AllLotto(decoded_json):
         Application.dlbList = getDataFromDLB()
         Application.dlbListSize = len(Application.dlbList)
         message = getMessage(Application.nlbList, Application.dlbList)
-        print user.messageFlow
-        print decoded_json["message"]
-        print user.newUser
         if (user.newUser == "True"):
-            SubscriptionMessage = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
-                                                          password=Ideamart.password, url=Ideamart.SubscriptionUrl,
-                                                          applicationID=decoded_json["applicationId"], action="1",
-                                                          version=decoded_json["version"])
-            CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
-                                          SubscriberId=decoded_json["sourceAddress"],
-                                          applicationID=decoded_json["applicationId"], ExternalTrxId=getExternalTrxId(),
-                                          Amount=Ideamart.Amount)
-
             USSDmessage = USSDmessageBody(message=message,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
                                           destAddress=decoded_json["sourceAddress"],
@@ -129,11 +112,18 @@ def AllLotto(decoded_json):
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
             # user subscription
+            SubscriptionMessage = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
+                                                          password=Ideamart.password, url=Ideamart.SubscriptionUrl,
+                                                          applicationID=decoded_json["applicationId"], action="1",
+                                                          version=decoded_json["version"])
             sendSubscriptionMessage(SubscriptionMessage)
-            # send message
-            # sendSMSMessage(SMSMessage)
             sendUSSDMessage(USSDmessage)
             if decoded_json["sourceAddress"] not in privateNumbers:
+                CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
+                                              SubscriberId=decoded_json["sourceAddress"],
+                                              applicationID=decoded_json["applicationId"],
+                                              ExternalTrxId=getExternalTrxId(),
+                                              Amount=Ideamart.Amount)
                 sendCAASMessage(CAASmessage)
             dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
             dao.updateUserElder(decoded_json["sourceAddress"], "False")
@@ -153,8 +143,6 @@ def AllLotto(decoded_json):
                 requestNumber = int(decoded_json["message"])
                 user = dao.getUser(decoded_json["sourceAddress"])
                 Application.messageFlow = user.messageFlow
-                logging.error("messageFlow")
-                logging.error(Application.messageFlow)
                 if (requestNumber == 0) and (Application.messageFlow) == 2:
                     Application.messageFlow = 0
                 if Application.messageFlow == 0:
@@ -170,8 +158,6 @@ def AllLotto(decoded_json):
                     dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
                 # request draw number
                 elif Application.messageFlow == 1:
-                    logging.error("requestNumber")
-                    logging.error(requestNumber)
                     # fetch data from lottery database
                     Application.nlbList = getDataFromNLB()
                     Application.nlbListSize = len(Application.nlbList)
@@ -209,8 +195,6 @@ def AllLotto(decoded_json):
                     Application.dlbListSize = len(Application.dlbList)
                     result = LotteryResult(user.index, str(requestNumber))
                     result = result.replace('\xc2\xa0', ' ')
-                    logging.error("Result")
-                    logging.error(result)
                     USSDmessage = USSDmessageBody(message=result + "\n" + "0. Thava balanna" + "\n" + "000. Exit",
                                                   password=Ideamart.password, url=Ideamart.USSDUrl,
                                                   destAddress=decoded_json["sourceAddress"],

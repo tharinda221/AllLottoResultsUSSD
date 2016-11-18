@@ -31,9 +31,9 @@ class UserDAO:
 
     def userExist(self, address):
         if DatabaseCollections.userCollection.find({"address": address}).count() > 0:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def updateUserIndex(self, address, index):
         """
