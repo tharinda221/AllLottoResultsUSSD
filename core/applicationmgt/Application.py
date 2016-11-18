@@ -10,8 +10,10 @@ from datetime import datetime, timedelta
 now = datetime.now()
 
 privateNumbers = ["tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZ4KDZcwNDIq8viBORtMF6j",
-            "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL"]
-# "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandNiOoeb2KN1wLxBRD6LLcPh"
+                  "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL",
+                  "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandNiOoeb2KN1wLxBRD6LLcPh"]
+
+
 def getMessage(nlbList, dlbList):
     count = 1
     output = ""
@@ -79,7 +81,6 @@ def AllLotto(decoded_json):
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
 
-
             sendUSSDMessage(USSDmessage)
             if decoded_json["sourceAddress"] not in privateNumbers:
                 CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
@@ -135,8 +136,9 @@ def AllLotto(decoded_json):
             dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
             dao.updateUserElder(decoded_json["sourceAddress"], "False")
             sendsms = SMSmessageBody(message=Application.initSMS,
-                                     password=Ideamart.password,url=Ideamart.SMSUrl,destAddress=decoded_json["sourceAddress"],
-                                          applicationID=decoded_json["applicationId"])
+                                     password=Ideamart.password, url=Ideamart.SMSUrl,
+                                     destAddress=decoded_json["sourceAddress"],
+                                     applicationID=decoded_json["applicationId"])
             run_at = now + timedelta(seconds=10)
             delay = (run_at - now).total_seconds()
             threading.Timer(delay, sendSMSMessage(sendsms)).start()
