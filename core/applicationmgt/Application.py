@@ -61,11 +61,11 @@ def AllLotto(decoded_json):
                         count=1, newUser="True")
             dao.createUser(user)
 
-        # subscriptionstatus = SubscriptionStatusBody(subscriberId=decoded_json["sourceAddress"],
-        #                                             password=Ideamart.password,
-        #                                             applicationID=decoded_json["applicationId"],
-        #                                             url=Ideamart.SubscriptionStatusUrl)
-        if userExist:
+        subscriptionstatus = SubscriptionStatusBody(subscriberId=decoded_json["sourceAddress"],
+                                                    password=Ideamart.password,
+                                                    applicationID=decoded_json["applicationId"],
+                                                    url=Ideamart.SubscriptionStatusUrl)
+        if getSubscriptionStatus(subscriptionstatus):
             message = getMessage(Application.nlbList, Application.dlbList)
             USSDmessage = USSDmessageBody(message=message,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -126,6 +126,10 @@ def AllLotto(decoded_json):
                 sendCAASMessage(CAASmessage)
             dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
             dao.updateUserElder(decoded_json["sourceAddress"], "False")
+            sendsms = SMSmessageBody(message=Application.initSMS,
+                                     password=Ideamart.password,url=Ideamart.SMSUrl,destAddress=decoded_json["sourceAddress"],
+                                          applicationID=decoded_json["applicationId"])
+            sendSMSMessage(sendsms)
             return
 
         if decoded_json["message"] == "000":
