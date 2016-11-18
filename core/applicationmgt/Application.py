@@ -72,15 +72,11 @@ def AllLotto(decoded_json):
         SMSMessage = SMSmessageBody(message=Application.initSMS, password=Ideamart.password, url=Ideamart.SMSUrl,
                                     destAddress=decoded_json["sourceAddress"],
                                     applicationID=decoded_json["applicationId"])
-        SubscriptionMessage = SubscriptionMessageBody(subscriberId=decoded_json["sourceAddress"],
-                                                      password=Ideamart.password, url=Ideamart.SubscriptionUrl,
-                                                      applicationID=decoded_json["applicationId"], action="1",
-                                                      version=decoded_json["version"])
         CAASmessage = CAASmessageBody(password=Ideamart.password, url=Ideamart.CAASUrl,
                                       SubscriberId=decoded_json["sourceAddress"],
                                       applicationID=decoded_json["applicationId"], ExternalTrxId=getExternalTrxId(),
                                       Amount=Ideamart.Amount)
-        if not userExist:
+        if getSubscriptionStatus(subscriptionstatus):
             message = getMessage(Application.nlbList, Application.dlbList)
             USSDmessage = USSDmessageBody(message=message,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
@@ -88,25 +84,21 @@ def AllLotto(decoded_json):
                                           applicationID=decoded_json["applicationId"]
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
-            # user subscription
-            sendSubscriptionMessage(SubscriptionMessage)
-            print getSubscriptionStatus(subscriptionstatus)
-            # send message
-            # sendSMSMessage(SMSMessage)
+
+
             sendUSSDMessage(USSDmessage)
             if decoded_json["sourceAddress"] not in privateNumbers:
                 sendCAASMessage(CAASmessage)
-            sendSMSMessage(SMSMessage)
         else:
+            dao.updateUserElder(decoded_json["sourceAddress"], "True")
             USSDmessage = USSDmessageBody(message=Application.regMessage,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
                                           destAddress=decoded_json["sourceAddress"],
                                           applicationID=decoded_json["applicationId"]
                                           , encording=decoded_json["encoding"], sessionId=decoded_json["sessionId"],
                                           ussdOperation="mt-cont", version=decoded_json["version"])
-            print getSubscriptionStatus(subscriptionstatus)
+
             sendUSSDMessage(USSDmessage)
-            sendSMSMessage(SMSMessage)
     #
     else:
         logging.error("mo-cont Request Came")
@@ -141,8 +133,7 @@ def AllLotto(decoded_json):
             # send message
             # sendSMSMessage(SMSMessage)
             sendUSSDMessage(USSDmessage)
-            if (decoded_json[
-                    "sourceAddress"] != "tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZUUmm1214PTntn8GConhV0"):
+            if decoded_json["sourceAddress"] not in privateNumbers:
                 sendCAASMessage(CAASmessage)
             dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
             dao.updateUserElder(decoded_json["sourceAddress"], "False")
