@@ -178,6 +178,11 @@ def AllLotto(decoded_json):
                                                       ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
                         dao.updateUserMessageFlow(decoded_json["sourceAddress"], 2)
+                        sendsms = SMSmessageBody(message=Application.initSMS,
+                                                 password=Ideamart.password, url=Ideamart.SMSUrl,
+                                                 destAddress=decoded_json["sourceAddress"],
+                                                 applicationID=decoded_json["applicationId"])
+                        sendSMSMessage(sendsms)
                     # user request fail scenario
                     else:
                         USSDmessage = USSDmessageBody(message=Application.ErrorMessage,
