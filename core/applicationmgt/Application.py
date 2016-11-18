@@ -5,8 +5,8 @@ from core.usermgt.UserDAO import UserDAO
 import random
 
 privateNumbers = ["tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZ4KDZcwNDIq8viBORtMF6j",
-            "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL",
-                  "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandNiOoeb2KN1wLxBRD6LLcPh"]
+            "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL"]
+# "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandNiOoeb2KN1wLxBRD6LLcPh"
 def getMessage(nlbList, dlbList):
     count = 1
     output = ""
@@ -178,11 +178,7 @@ def AllLotto(decoded_json):
                                                       ussdOperation="mt-cont", version=decoded_json["version"])
                         sendUSSDMessage(USSDmessage)
                         dao.updateUserMessageFlow(decoded_json["sourceAddress"], 2)
-                        sendsms = SMSmessageBody(message=Application.initSMS,
-                                                 password=Ideamart.password, url=Ideamart.SMSUrl,
-                                                 destAddress=decoded_json["sourceAddress"],
-                                                 applicationID=decoded_json["applicationId"])
-                        sendSMSMessage(sendsms)
+
                     # user request fail scenario
                     else:
                         USSDmessage = USSDmessageBody(message=Application.ErrorMessage,
