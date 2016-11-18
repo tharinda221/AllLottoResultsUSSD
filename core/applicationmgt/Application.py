@@ -61,11 +61,11 @@ def AllLotto(decoded_json):
                         count=1, newUser="True")
             dao.createUser(user)
 
-        subscriptionstatus = SubscriptionStatusBody(subscriberId=decoded_json["sourceAddress"],
-                                                    password=Ideamart.password,
-                                                    applicationID=decoded_json["applicationId"],
-                                                    url=Ideamart.SubscriptionStatusUrl)
-        if getSubscriptionStatus(subscriptionstatus):
+        # subscriptionstatus = SubscriptionStatusBody(subscriberId=decoded_json["sourceAddress"],
+        #                                             password=Ideamart.password,
+        #                                             applicationID=decoded_json["applicationId"],
+        #                                             url=Ideamart.SubscriptionStatusUrl)
+        if userExist:
             message = getMessage(Application.nlbList, Application.dlbList)
             USSDmessage = USSDmessageBody(message=message,
                                           password=Ideamart.password, url=Ideamart.USSDUrl,
