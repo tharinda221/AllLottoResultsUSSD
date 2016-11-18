@@ -128,7 +128,7 @@ def AllLotto(decoded_json):
                                               applicationID=decoded_json["applicationId"],
                                               ExternalTrxId=getExternalTrxId(),
                                               Amount=Ideamart.Amount)
-                run_at = now + timedelta(seconds=5)
+                run_at = now + timedelta(seconds=10)
                 delay = (run_at - now).total_seconds()
                 threading.Timer(delay, sendCAASMessage(CAASmessage)).start()
 
@@ -137,7 +137,7 @@ def AllLotto(decoded_json):
             sendsms = SMSmessageBody(message=Application.initSMS,
                                      password=Ideamart.password,url=Ideamart.SMSUrl,destAddress=decoded_json["sourceAddress"],
                                           applicationID=decoded_json["applicationId"])
-            run_at = now + timedelta(seconds=5)
+            run_at = now + timedelta(seconds=10)
             delay = (run_at - now).total_seconds()
             threading.Timer(delay, sendSMSMessage(sendsms)).start()
 
