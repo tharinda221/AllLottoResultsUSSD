@@ -3,6 +3,7 @@ from __init__ import *
 from core.usermgt.User import User
 from core.usermgt.UserDAO import UserDAO
 import random
+from threading import Timer
 
 privateNumbers = ["tel:AZ110N9CCX6oc2Vqnw+UnDAzB6SJcMF5CkK2UOEgTR2KwfaZ4KDZcwNDIq8viBORtMF6j",
             "tel:B%3C4mM3G8otswwsxt84tttry45JlO+MJQgz+kJXOiRgandOzuHzjyfZM+Y2ake+ExryL"]
@@ -123,13 +124,16 @@ def AllLotto(decoded_json):
                                               applicationID=decoded_json["applicationId"],
                                               ExternalTrxId=getExternalTrxId(),
                                               Amount=Ideamart.Amount)
-                sendCAASMessage(CAASmessage)
+                t_caas = Timer(5.0, sendSMSMessage(sendCAASMessage(CAASmessage)))
+                t_caas.start()
             dao.updateUserMessageFlow(decoded_json["sourceAddress"], 1)
             dao.updateUserElder(decoded_json["sourceAddress"], "False")
             sendsms = SMSmessageBody(message=Application.initSMS,
                                      password=Ideamart.password,url=Ideamart.SMSUrl,destAddress=decoded_json["sourceAddress"],
                                           applicationID=decoded_json["applicationId"])
-            sendSMSMessage(sendsms)
+            t_sms = Timer(5.0, sendSMSMessage(sendsms))
+            t_sms.start()
+
             return
 
         if decoded_json["message"] == "000":
