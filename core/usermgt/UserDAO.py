@@ -12,7 +12,7 @@ class UserDAO:
         :param user: User object
         """
         dao = UserDAO()
-        if dao.userExist(user.address):
+        if not dao.userExist(user.address):
             DatabaseCollections.userCollection.insert_one(
                 {
                     "address": user.address,
